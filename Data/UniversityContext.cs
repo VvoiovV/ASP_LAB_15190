@@ -15,11 +15,12 @@ namespace Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            var folder = Environment.SpecialFolder.LocalApplicationData;
-            var path = Environment.GetFolderPath(folder);
-            var db = System.IO.Path.Join(path, "university.db");
-            options.UseSqlite($"Data Source={db}");
+            if (!options.IsConfigured)
+            {
+                options.UseSqlite("Data Source=Data/university.db");
+            }
         }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
