@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Data.Entities
 {
     [Table("student")]
-    public class StudentEntity
+    public class UserEntity
     {
         [Key]
         public int Id { get; set; }
@@ -31,6 +31,6 @@ namespace Data.Entities
         [Column("birth_date")]
         public DateTime Birth { get; set; }
 
-        public ICollection<EnrollmentEntity> Enrollments { get; set; }
+        public ICollection<OrderEntity> Enrollments { get; set; }
     }
 }

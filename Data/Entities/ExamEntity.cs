@@ -15,6 +15,6 @@ using System.ComponentModel.DataAnnotations;
 
             public int? CourseId { get; set; }
 
-            public CourseEntity? Course { get; set; }
+            public ProductEntity? Course { get; set; }
         }
 }

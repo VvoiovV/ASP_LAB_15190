@@ -17,6 +17,6 @@ namespace Data.Entities
         [Required]
         public string AcademicTitle { get; set; }
 
-        public ICollection<CourseEntity> Courses { get; set; }
+        public ICollection<ProductEntity> Courses { get; set; }
     }
 }

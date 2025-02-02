@@ -5,7 +5,7 @@ namespace WebApplication1.Mappers
 {
     public class StudentMapper
     {
-        public static StudentViewModel FromEntity(StudentEntity entity)
+        public static StudentViewModel FromEntity(UserEntity entity)
         {
             return new StudentViewModel()
             {
@@ -17,9 +17,9 @@ namespace WebApplication1.Mappers
             };
         }
 
-        public static StudentEntity ToEntity(StudentViewModel model)
+        public static UserEntity ToEntity(StudentViewModel model)
         {
-            return new StudentEntity()
+            return new UserEntity()
             {
                 Id = model.Id.HasValue ? model.Id.Value : 0,
                 Name = model.Name,

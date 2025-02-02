@@ -7,10 +7,10 @@ using WebApplication1.Services;
 namespace WebApplication1.Controllers
 {
     [Authorize(Roles = "admin")]
-    public class StudentController : Controller
+    public class UserController : Controller
     {
         private IStudentService _service;
-        public StudentController(IStudentService service)
+        public UserController(IStudentService service)
         {
             _service = service;
         }

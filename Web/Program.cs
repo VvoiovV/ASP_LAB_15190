@@ -10,6 +10,10 @@ using System.Xml.Linq;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("UniversityContextConnection") ?? throw new InvalidOperationException("Connection string 'UniversityContextConnection' not found.");
 
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<UniversityContext>();
+
+
 builder.Services.AddDbContext<UniversityContext>(); // Scoped by default
 
 builder.Services.AddDefaultIdentity<IdentityUser>()     

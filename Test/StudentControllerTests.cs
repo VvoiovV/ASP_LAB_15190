@@ -27,7 +27,7 @@ namespace WebApplicationTestProject
         {
             // Arrange
             this.studentServiceMock.Setup(m => m.FindAll()).Returns(students);
-            var studentController = new StudentController(studentServiceMock.Object);
+            var studentController = new UserController(studentServiceMock.Object);
             // Act
             var result = studentController.Index();
             // Assert
@@ -46,7 +46,7 @@ namespace WebApplicationTestProject
         {
             // Arrange
             //this.studentServiceMock.Setup(m => m.Add()).Returns(5);
-            var studentController = new StudentController(studentServiceMock.Object);
+            var studentController = new UserController(studentServiceMock.Object);
 
             // Act
             var result = studentController.Create();
@@ -64,7 +64,7 @@ namespace WebApplicationTestProject
             // Arrange
             StudentViewModel viewModel = new StudentViewModel();
             //this.studentServiceMock.Setup(m => m.Add(viewModel)).Returns(0);
-            var studentController = new StudentController(studentServiceMock.Object);
+            var studentController = new UserController(studentServiceMock.Object);
 
 
             // Act
@@ -81,7 +81,7 @@ namespace WebApplicationTestProject
         public void TestPostCreateActionNegative()
         {
             // Arrange
-            var studentController = new StudentController(studentServiceMock.Object);
+            var studentController = new UserController(studentServiceMock.Object);
             studentController.ModelState.AddModelError("fakeError", "fakeError");
 
             // Act
