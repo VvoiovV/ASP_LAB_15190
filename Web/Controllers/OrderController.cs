@@ -3,6 +3,7 @@ using Data.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Web.Controllers
@@ -24,10 +25,18 @@ namespace Web.Controllers
                 return NotFound();
             }
 
+            // ✅ Sprawdzenie, czy użytkownik jest zalogowany
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Account"); // Jeśli nie jest zalogowany, przekieruj do logowania
+            }
+
+            // ✅ Tworzenie zamówienia dla zalogowanego użytkownika
             var order = new OrderEntity
             {
                 ProductId = product.Id,
-                UserId = "TODO: Pobierz ID aktualnego użytkownika",
+                UserId = userId, // ✅ Używa ID aktualnie zalogowanego użytkownika
                 OrderDate = DateTime.Now,
                 IsPaid = false
             };
