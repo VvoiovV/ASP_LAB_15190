@@ -256,12 +256,12 @@ namespace Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "1acc7c0c-08a4-48b9-b929-4239c60289c9", "1acc7c0c-08a4-48b9-b929-4239c60289c9", "admin", "ADMIN" });
+                values: new object[] { "4a73b448-dfb3-4f43-9ab1-057a5e93e529", "4a73b448-dfb3-4f43-9ab1-057a5e93e529", "admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "1006fdba-77d3-450a-bb61-96ceafd71037", 0, "11c17ae7-53e1-40a4-9178-ad9af2a10702", "adminuser@wsei.edu.pl", true, false, null, "ADMINUSER@WSEI.EDU.PL", "ADMINUSER@WSEI.EDU.PL", "AQAAAAIAAYagAAAAEGSS2Dg10KSdCG6s+ac/xNVeYyS5jbcx46FiGS1y3u1X7SHvVtQRfaW0tJ7Lv15arA==", null, false, "9ee2c9ed-bf04-4745-9647-30d86681d5a1", false, "adminuser@wsei.edu.pl" });
+                values: new object[] { "8fe5a189-51fd-429d-8d7e-dd150061d633", 0, "53c5ac6e-6036-47b7-93a0-d2a246889d1b", "adminuser@wsei.edu.pl", true, false, null, "ADMINUSER@WSEI.EDU.PL", "ADMINUSER@WSEI.EDU.PL", "AQAAAAIAAYagAAAAEENn2kBAS/qNcAuod5sr1nQuEtYK7pWBmL71iYpmj0SvBHfY8P3Qn34PW97u52vr6Q==", null, false, "ca153983-665f-4e24-a839-d31265e6f675", false, "adminuser@wsei.edu.pl" });
 
             migrationBuilder.InsertData(
                 table: "instructor",
@@ -271,7 +271,7 @@ namespace Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "1acc7c0c-08a4-48b9-b929-4239c60289c9", "1006fdba-77d3-450a-bb61-96ceafd71037" });
+                values: new object[] { "4a73b448-dfb3-4f43-9ab1-057a5e93e529", "8fe5a189-51fd-429d-8d7e-dd150061d633" });
 
             migrationBuilder.InsertData(
                 table: "course",
