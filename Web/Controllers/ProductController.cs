@@ -2,9 +2,11 @@
 using Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Web.Controllers
 {
+    [AllowAnonymous]
     public class ProductController : Controller
     {
         private readonly UniversityContext _context;

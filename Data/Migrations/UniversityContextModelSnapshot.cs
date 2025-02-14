@@ -73,22 +73,29 @@ namespace Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("CourseID")
+                    b.Property<bool>("IsPaid")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("Grade")
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ProductId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("StudentID")
+                    b.Property<int?>("UserEntityId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseID");
+                    b.HasIndex("ProductId");
 
-                    b.HasIndex("StudentID");
+                    b.HasIndex("UserEntityId");
 
-                    b.ToTable("enrollment");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Data.Entities.ProductEntity", b =>
@@ -97,30 +104,33 @@ namespace Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Credits")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("InstructorId")
+                    b.Property<int?>("InstructorEntityId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Price")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InstructorId");
+                    b.HasIndex("InstructorEntityId");
 
-                    b.ToTable("course");
+                    b.ToTable("Products");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            Credits = 10,
-                            InstructorId = 1,
-                            Name = "ASP.NET"
+                            Description = "Podstawowy kurs ASP.NET",
+                            Name = "ASP.NET",
+                            Price = 199.99m
                         });
                 });
 
@@ -183,8 +193,8 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "dae1c0d3-ebdb-4361-8702-6c7e3520dc74",
-                            ConcurrencyStamp = "dae1c0d3-ebdb-4361-8702-6c7e3520dc74",
+                            Id = "8bfd483c-ea64-4b26-bf87-9e136ed9d18f",
+                            ConcurrencyStamp = "8bfd483c-ea64-4b26-bf87-9e136ed9d18f",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         });
@@ -279,17 +289,17 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "0347e455-cccc-427d-b9c7-e3cdbd537a55",
+                            Id = "f2af97bd-0cff-48d0-9b54-678a681e7b8b",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e2f558f5-e432-4839-b547-d5072aee0c2b",
+                            ConcurrencyStamp = "acd0552c-af57-4654-8209-2cdb34c1426e",
                             Email = "adminuser@wsei.edu.pl",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMINUSER@WSEI.EDU.PL",
                             NormalizedUserName = "ADMINUSER@WSEI.EDU.PL",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJ8x/qcE6FX2gjwyTNyPjeBjcH6NXbzGOHgbwVYLaao/CQsKrdHosK+FxY1fBEtR0g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOqjtYX1YGIiQgbEMdtl/dHP+ahn6EYx5c5XAxOULEIY1MLnAyBdU93ud1knQ70iqQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ef96c0ad-5625-4b81-a1cb-52d8420a103a",
+                            SecurityStamp = "059c094b-4a76-4022-b6f6-2c3a7c1337ef",
                             TwoFactorEnabled = false,
                             UserName = "adminuser@wsei.edu.pl"
                         });
@@ -321,9 +331,11 @@ namespace Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
+                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ProviderKey")
+                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ProviderDisplayName")
@@ -357,8 +369,8 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "0347e455-cccc-427d-b9c7-e3cdbd537a55",
-                            RoleId = "dae1c0d3-ebdb-4361-8702-6c7e3520dc74"
+                            UserId = "f2af97bd-0cff-48d0-9b54-678a681e7b8b",
+                            RoleId = "8bfd483c-ea64-4b26-bf87-9e136ed9d18f"
                         });
                 });
 
@@ -368,9 +380,11 @@ namespace Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LoginProvider")
+                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
+                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Value")
@@ -392,32 +406,24 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Entities.OrderEntity", b =>
                 {
-                    b.HasOne("Data.Entities.ProductEntity", "Course")
+                    b.HasOne("Data.Entities.ProductEntity", "Product")
                         .WithMany()
-                        .HasForeignKey("CourseID")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Data.Entities.UserEntity", "Student")
+                    b.HasOne("Data.Entities.UserEntity", null)
                         .WithMany("Enrollments")
-                        .HasForeignKey("StudentID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserEntityId");
 
-                    b.Navigation("Course");
-
-                    b.Navigation("Student");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Data.Entities.ProductEntity", b =>
                 {
-                    b.HasOne("Data.Entities.InstructorEntity", "Instructor")
+                    b.HasOne("Data.Entities.InstructorEntity", null)
                         .WithMany("Courses")
-                        .HasForeignKey("InstructorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Instructor");
+                        .HasForeignKey("InstructorEntityId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -1,8 +1,0 @@
-﻿@foreach (var product in Model)
-{
-    <div>
-        <h3>@product.Name</h3>
-        <p>@product.Price PLN</p>
-        <a asp-controller="Orders" asp-action="AddToOrder" asp-route-id="@product.Id" class="btn btn-success">Kup</a>
-    </div>
-}

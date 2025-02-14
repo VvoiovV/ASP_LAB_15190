@@ -13,10 +13,11 @@ namespace Data
         public DbSet<InstructorEntity> Instructors { get; set; }
         public DbSet<ExamEntity> Exams { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        public UniversityContext(DbContextOptions<UniversityContext> options)
+    :   base(options)
         {
-            options.UseSqlite("Data Source=./Data/university.db"); //  Teraz zapisuje się w Data/university.db
         }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

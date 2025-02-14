@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Data.Entities.ProductEntity>
+
+<h1>Lista produktów</h1>
+
+@foreach (var product in Model)
+{
+    <div>
+        <h3>@product.Name</h3>
+        <p>@product.Price PLN</p>
+        <a asp-controller="Order" asp-action="AddToOrder" asp-route-id="@product.Id" class="btn btn-success">Kup</a>
+    </div>
+}

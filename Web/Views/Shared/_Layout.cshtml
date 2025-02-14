@@ -23,16 +23,10 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Student" asp-action="Index">Students</a>
+                            <a class="nav-link text-dark" asp-controller="Product" asp-action="Index">Sklep</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Course" asp-action="Index">Courses</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Instructor" asp-action="Index">Instructors</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Enrollment" asp-action="Index">Enrollments</a>
+                            <a class="nav-link text-dark" asp-controller="Order" asp-action="Index">Moje Zamówienia</a>
                         </li>
                         <partial name="_LoginPartial" />
                     </ul>
@@ -41,6 +35,7 @@
         </nav>
     </header>
     <div class="container">
+        @await Component.InvokeAsync("CartSummary")
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

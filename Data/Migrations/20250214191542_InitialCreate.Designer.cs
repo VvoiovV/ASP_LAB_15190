@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(UniversityContext))]
-    [Migration("20250202193757_InitialCreate")]
+    [Migration("20250214191542_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -19,63 +19,6 @@ namespace Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.11");
-
-            modelBuilder.Entity("Data.Entities.CourseEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Credits")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("InstructorId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InstructorId");
-
-                    b.ToTable("course");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Credits = 10,
-                            InstructorId = 1,
-                            Name = "ASP.NET"
-                        });
-                });
-
-            modelBuilder.Entity("Data.Entities.EnrollmentEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("CourseID")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("Grade")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("StudentID")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseID");
-
-                    b.HasIndex("StudentID");
-
-                    b.ToTable("enrollment");
-                });
 
             modelBuilder.Entity("Data.Entities.ExamEntity", b =>
                 {
@@ -127,7 +70,74 @@ namespace Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Data.Entities.StudentEntity", b =>
+            modelBuilder.Entity("Data.Entities.OrderEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("UserEntityId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserEntityId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("Data.Entities.ProductEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("InstructorEntityId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InstructorEntityId");
+
+                    b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Podstawowy kurs ASP.NET",
+                            Name = "ASP.NET",
+                            Price = 199.99m
+                        });
+                });
+
+            modelBuilder.Entity("Data.Entities.UserEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -186,8 +196,8 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "4a73b448-dfb3-4f43-9ab1-057a5e93e529",
-                            ConcurrencyStamp = "4a73b448-dfb3-4f43-9ab1-057a5e93e529",
+                            Id = "8bfd483c-ea64-4b26-bf87-9e136ed9d18f",
+                            ConcurrencyStamp = "8bfd483c-ea64-4b26-bf87-9e136ed9d18f",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         });
@@ -282,17 +292,17 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "8fe5a189-51fd-429d-8d7e-dd150061d633",
+                            Id = "f2af97bd-0cff-48d0-9b54-678a681e7b8b",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "53c5ac6e-6036-47b7-93a0-d2a246889d1b",
+                            ConcurrencyStamp = "acd0552c-af57-4654-8209-2cdb34c1426e",
                             Email = "adminuser@wsei.edu.pl",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMINUSER@WSEI.EDU.PL",
                             NormalizedUserName = "ADMINUSER@WSEI.EDU.PL",
-                            PasswordHash = "AQAAAAIAAYagAAAAEENn2kBAS/qNcAuod5sr1nQuEtYK7pWBmL71iYpmj0SvBHfY8P3Qn34PW97u52vr6Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOqjtYX1YGIiQgbEMdtl/dHP+ahn6EYx5c5XAxOULEIY1MLnAyBdU93ud1knQ70iqQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ca153983-665f-4e24-a839-d31265e6f675",
+                            SecurityStamp = "059c094b-4a76-4022-b6f6-2c3a7c1337ef",
                             TwoFactorEnabled = false,
                             UserName = "adminuser@wsei.edu.pl"
                         });
@@ -324,9 +334,11 @@ namespace Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
+                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ProviderKey")
+                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ProviderDisplayName")
@@ -360,8 +372,8 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "8fe5a189-51fd-429d-8d7e-dd150061d633",
-                            RoleId = "4a73b448-dfb3-4f43-9ab1-057a5e93e529"
+                            UserId = "f2af97bd-0cff-48d0-9b54-678a681e7b8b",
+                            RoleId = "8bfd483c-ea64-4b26-bf87-9e136ed9d18f"
                         });
                 });
 
@@ -371,9 +383,11 @@ namespace Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LoginProvider")
+                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
+                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Value")
@@ -384,43 +398,35 @@ namespace Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Data.Entities.CourseEntity", b =>
-                {
-                    b.HasOne("Data.Entities.InstructorEntity", "Instructor")
-                        .WithMany("Courses")
-                        .HasForeignKey("InstructorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Instructor");
-                });
-
-            modelBuilder.Entity("Data.Entities.EnrollmentEntity", b =>
-                {
-                    b.HasOne("Data.Entities.CourseEntity", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Data.Entities.StudentEntity", "Student")
-                        .WithMany("Enrollments")
-                        .HasForeignKey("StudentID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-
-                    b.Navigation("Student");
-                });
-
             modelBuilder.Entity("Data.Entities.ExamEntity", b =>
                 {
-                    b.HasOne("Data.Entities.CourseEntity", "Course")
+                    b.HasOne("Data.Entities.ProductEntity", "Course")
                         .WithMany()
                         .HasForeignKey("CourseId");
 
                     b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("Data.Entities.OrderEntity", b =>
+                {
+                    b.HasOne("Data.Entities.ProductEntity", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Entities.UserEntity", null)
+                        .WithMany("Enrollments")
+                        .HasForeignKey("UserEntityId");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Data.Entities.ProductEntity", b =>
+                {
+                    b.HasOne("Data.Entities.InstructorEntity", null)
+                        .WithMany("Courses")
+                        .HasForeignKey("InstructorEntityId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -479,7 +485,7 @@ namespace Data.Migrations
                     b.Navigation("Courses");
                 });
 
-            modelBuilder.Entity("Data.Entities.StudentEntity", b =>
+            modelBuilder.Entity("Data.Entities.UserEntity", b =>
                 {
                     b.Navigation("Enrollments");
                 });

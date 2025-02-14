@@ -11,6 +11,6 @@ namespace Data.Entities
         public DateTime OrderDate { get; set; }  // ✅ Data zamówienia
         public bool IsPaid { get; set; }  // ✅ Czy zamówienie jest opłacone?
 
-        public ProductEntity Product { get; set; }  // Relacja z produktem
+        public ProductEntity? Product { get; set; }
     }
 }

@@ -45,6 +45,25 @@ namespace Web.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index", "Orders");
+
+
         }
+        public async Task<IActionResult> Index()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var orders = await _context.Orders
+                .Include(o => o.Product)
+                .Where(o => o.UserId == userId)
+                .ToListAsync();
+
+            return View(orders);
+        }
+
     }
 }

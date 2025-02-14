@@ -126,8 +126,8 @@ namespace Data.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "TEXT", nullable: false),
-                    ProviderKey = table.Column<string>(type: "TEXT", nullable: false),
+                    LoginProvider = table.Column<string>(type: "TEXT", maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(type: "TEXT", maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "TEXT", nullable: true),
                     UserId = table.Column<string>(type: "TEXT", nullable: false)
                 },
@@ -171,8 +171,8 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "TEXT", nullable: false),
-                    LoginProvider = table.Column<string>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    LoginProvider = table.Column<string>(type: "TEXT", maxLength: 128, nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 128, nullable: false),
                     Value = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
@@ -187,51 +187,24 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "course",
+                name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
-                    Credits = table.Column<int>(type: "INTEGER", nullable: false),
-                    InstructorId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Price = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    InstructorEntityId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_course", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_course_instructor_InstructorId",
-                        column: x => x.InstructorId,
+                        name: "FK_Products_instructor_InstructorEntityId",
+                        column: x => x.InstructorEntityId,
                         principalTable: "instructor",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "enrollment",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    CourseID = table.Column<int>(type: "INTEGER", nullable: false),
-                    StudentID = table.Column<int>(type: "INTEGER", nullable: false),
-                    Grade = table.Column<int>(type: "INTEGER", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_enrollment", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_enrollment_course_CourseID",
-                        column: x => x.CourseID,
-                        principalTable: "course",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_enrollment_student_StudentID",
-                        column: x => x.StudentID,
-                        principalTable: "student",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -247,21 +220,54 @@ namespace Data.Migrations
                 {
                     table.PrimaryKey("PK_exam", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_exam_course_CourseId",
+                        name: "FK_exam_Products_CourseId",
                         column: x => x.CourseId,
-                        principalTable: "course",
+                        principalTable: "Products",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ProductId = table.Column<int>(type: "INTEGER", nullable: false),
+                    UserId = table.Column<string>(type: "TEXT", nullable: false),
+                    OrderDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsPaid = table.Column<bool>(type: "INTEGER", nullable: false),
+                    UserEntityId = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Orders_student_UserEntityId",
+                        column: x => x.UserEntityId,
+                        principalTable: "student",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "4a73b448-dfb3-4f43-9ab1-057a5e93e529", "4a73b448-dfb3-4f43-9ab1-057a5e93e529", "admin", "ADMIN" });
+                values: new object[] { "8bfd483c-ea64-4b26-bf87-9e136ed9d18f", "8bfd483c-ea64-4b26-bf87-9e136ed9d18f", "admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "8fe5a189-51fd-429d-8d7e-dd150061d633", 0, "53c5ac6e-6036-47b7-93a0-d2a246889d1b", "adminuser@wsei.edu.pl", true, false, null, "ADMINUSER@WSEI.EDU.PL", "ADMINUSER@WSEI.EDU.PL", "AQAAAAIAAYagAAAAEENn2kBAS/qNcAuod5sr1nQuEtYK7pWBmL71iYpmj0SvBHfY8P3Qn34PW97u52vr6Q==", null, false, "ca153983-665f-4e24-a839-d31265e6f675", false, "adminuser@wsei.edu.pl" });
+                values: new object[] { "f2af97bd-0cff-48d0-9b54-678a681e7b8b", 0, "acd0552c-af57-4654-8209-2cdb34c1426e", "adminuser@wsei.edu.pl", true, false, null, "ADMINUSER@WSEI.EDU.PL", "ADMINUSER@WSEI.EDU.PL", "AQAAAAIAAYagAAAAEOqjtYX1YGIiQgbEMdtl/dHP+ahn6EYx5c5XAxOULEIY1MLnAyBdU93ud1knQ70iqQ==", null, false, "059c094b-4a76-4022-b6f6-2c3a7c1337ef", false, "adminuser@wsei.edu.pl" });
+
+            migrationBuilder.InsertData(
+                table: "Products",
+                columns: new[] { "Id", "Description", "InstructorEntityId", "Name", "Price" },
+                values: new object[] { 1, "Podstawowy kurs ASP.NET", null, "ASP.NET", 199.99m });
 
             migrationBuilder.InsertData(
                 table: "instructor",
@@ -271,12 +277,7 @@ namespace Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "4a73b448-dfb3-4f43-9ab1-057a5e93e529", "8fe5a189-51fd-429d-8d7e-dd150061d633" });
-
-            migrationBuilder.InsertData(
-                table: "course",
-                columns: new[] { "Id", "Credits", "InstructorId", "Name" },
-                values: new object[] { 1, 10, 1, "ASP.NET" });
+                values: new object[] { "8bfd483c-ea64-4b26-bf87-9e136ed9d18f", "f2af97bd-0cff-48d0-9b54-678a681e7b8b" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -316,24 +317,24 @@ namespace Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_course_InstructorId",
-                table: "course",
-                column: "InstructorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_enrollment_CourseID",
-                table: "enrollment",
-                column: "CourseID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_enrollment_StudentID",
-                table: "enrollment",
-                column: "StudentID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_exam_CourseId",
                 table: "exam",
                 column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_ProductId",
+                table: "Orders",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_UserEntityId",
+                table: "Orders",
+                column: "UserEntityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_InstructorEntityId",
+                table: "Products",
+                column: "InstructorEntityId");
         }
 
         /// <inheritdoc />
@@ -355,10 +356,10 @@ namespace Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "enrollment");
+                name: "exam");
 
             migrationBuilder.DropTable(
-                name: "exam");
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -367,10 +368,10 @@ namespace Data.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "student");
+                name: "Products");
 
             migrationBuilder.DropTable(
-                name: "course");
+                name: "student");
 
             migrationBuilder.DropTable(
                 name: "instructor");
