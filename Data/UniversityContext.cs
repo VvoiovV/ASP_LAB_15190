@@ -7,7 +7,7 @@ namespace Data
 {
     public class UniversityContext : IdentityDbContext<IdentityUser>
     {
-        public DbSet<UserEntity> Users { get; set; } //  Zmieniono z Students
+       
         public DbSet<ProductEntity> Products { get; set; } //  Zmieniono z Courses
         public DbSet<OrderEntity> Orders { get; set; } //  Zmieniono z Enrollments
         
