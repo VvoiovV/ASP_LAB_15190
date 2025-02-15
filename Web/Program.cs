@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using WebApplication1.Middleware;
-using WebApplication1.Services;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,8 +19,6 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<UniversityContext>();
 
-// Dodanie serwisów i innych usług
-builder.Services.AddTransient<IStudentService, StudentService>();
 
 builder.Services.AddMemoryCache();
 builder.Services.AddSession();

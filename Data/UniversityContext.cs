@@ -10,8 +10,8 @@ namespace Data
         public DbSet<UserEntity> Users { get; set; } //  Zmieniono z Students
         public DbSet<ProductEntity> Products { get; set; } //  Zmieniono z Courses
         public DbSet<OrderEntity> Orders { get; set; } //  Zmieniono z Enrollments
-        public DbSet<InstructorEntity> Instructors { get; set; }
-        public DbSet<ExamEntity> Exams { get; set; }
+        
+        
 
         public UniversityContext(DbContextOptions<UniversityContext> options)
     :   base(options)
@@ -23,9 +23,7 @@ namespace Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<InstructorEntity>().HasData(
-                new InstructorEntity { Id = 1, Name = "Konrad Ogłaza", AcademicTitle = "mgr inż." }
-            );
+            
 
             modelBuilder.Entity<ProductEntity>().HasData(
                 new ProductEntity { Id = 1, Name = "ASP.NET", Price = 199.99M, Description = "Podstawowy kurs ASP.NET" }
